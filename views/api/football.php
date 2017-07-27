@@ -8,7 +8,7 @@ use yii\data\ArrayDataProvider;
 $provider = new ArrayDataProvider([
     'allModels' => $data,
     'pagination' => [
-        'pageSize' => 10,
+        'pageSize' => 100,
     ],
     'sort' => [
         'attributes' => ['country_name', 'league_name'],

@@ -58,9 +58,16 @@ class ApiController extends Controller
         }
         $model->data_keys = json_encode($data);
         $model->interval =  $request['ApiSettings']['interval'];
-        if($model->save()){
+
+        return $this->redirect(['/api/showResult', 'api' => 'One']);
+    }
+
+    public function actionShowResult($api)
+    {
+        $model = Api::find()->where(['provider' => $api])->one();
+        if($model){
             $api = new FactoryApi();
-            $apiOne = $api->create('One', $model->data_keys);
+            $apiOne = $api->create('One', $model->settings->data_keys);
             $data = $apiOne->getData('2017-02-13', '2017-03-13');
             return $this->render('football', [
                 'data' => $data

@@ -41,4 +41,10 @@ class Api extends \yii\db\ActiveRecord
             'provider' => 'Provider',
         ];
     }
+
+    public function getSettings()
+    {
+        return $this->hasOne(ApiSettings::className(), ['api_id' => 'id']);
+    }
+
 }
