@@ -1,53 +1,59 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
+<div class="row">
+    <div class="col-md-12">
+        <?php $form = ActiveForm::begin([
+                'id' => 'contact-form',
+                'action' => '/api/football'
+        ]); ?>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <?= $form->field($apiSettings, 'api_id', ['inputOptions' => ['id' => 'api']])
+            ->dropDownList(ArrayHelper::map($api, 'id', 'provider')) ?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+        <div class="form-group field-apisettings-data_keys required">
+            <label class="control-label" for="apisettings-data_keys">Api Key</label>
+            <?= Html::textInput('apiKey','',array('class'=>'form-control')) ?>
         </div>
 
+        <div class="form-group field-apisettings-data_keys required" id="apiLogin" style="display: none">
+            <label class="control-label" for="apisettings-data_keys">UserName</label>
+            <?= Html::textInput('username','',array('class'=>'form-control')) ?>
+        </div>
+
+        <?= $form->field($apiSettings, 'interval')->dropDownList([5 => '5min', 10 => '10min', 30 => '30min'])->label('Update Interval') ?>
+
+        <div class="form-group">
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary apiLogin', 'name' => 'contact-button', 'id' => 'apiLogin']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php
+$this->registerJs(
+    '$("#api").change(function() {
+        let val = this.value;
+        if(val === "1"){
+            $("#apiLogin").hide();
+        } else if(val === "2") {
+            $("#apiLogin").show();
+            console.log(2);
+        } else {
+            console.log(3);
+        }
+    })'
+);
+?>
+<script>
+
+    /*$('#api').change(function() {
+        console.log($(this));
+    })*/
+</script>

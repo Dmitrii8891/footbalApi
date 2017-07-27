@@ -1,6 +1,6 @@
 <?php
 namespace app\controllers\api;
-class ApiFootballTwo extends Api
+class ApiFootballThree extends Api
 {
     public function __construct($data)
     {

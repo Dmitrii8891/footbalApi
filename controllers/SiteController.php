@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Api;
+use app\models\ApiSettings;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,7 +63,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $api = Api::find()->all();
+        $apiSettings = new ApiSettings();
+
+        return $this->render('index', [
+            'apiSettings' => $apiSettings,
+            'api' => $api
+        ]);
     }
 
     /**

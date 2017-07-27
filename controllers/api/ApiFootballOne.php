@@ -1,15 +1,23 @@
 <?php
-
+namespace app\controllers\api;
 class ApiFootballOne extends Api
 {
-    public function getData()
-    {
-        $APIkey='3681972507b2eda3b2f50a5e4db9e7dc3b802789b7295e237247a7784faa15a3';
-        $from = '2017-02-13';
-        $to = '2017-03-13';
+    public $apiKey;
 
+    public function __construct($data)
+    {   $apiKey = json_decode($data);
+        $this->apiKey = $apiKey->apiKey;
+    }
+
+    /**
+     * @param $from
+     * @param $to
+     * @return array|mixed
+     */
+    public function getData($from, $to)
+    {
         $curl_options = array(
-            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&APIkey=$APIkey",
+            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&APIkey=$this->apiKey",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_TIMEOUT => 30,
@@ -21,6 +29,7 @@ class ApiFootballOne extends Api
         $result = curl_exec( $curl );
 
         $result = (array) json_decode($result);
-        var_dump($result);
+
+        return $result;
     }
 }
